@@ -2,7 +2,7 @@
 
 A real-time 16-tap low-pass FIR filter in Verilog, targeting the Xilinx Artix-7
 XC7A35T at a 100 MHz DSP clock. Built for the MLH hackathon at Davidson College
-(Feb 2026), where the project won 1st place overall.
+(Feb 2026).
 
 ## What it does
 
