@@ -20,18 +20,10 @@
 //   stage 5 : adder tree  2 -> 1 (final 32-bit accumulator)
 //   stage 6 : output register with rounding + saturation
 //
-// VALID-ALIGNMENT (the important part):
-//   The tap shift register is clock-GATED by sample_valid_in: it only shifts
-//   when a new sample arrives, so idle cycles never smear the tap window.
-//   The product registers, every adder-tree stage, the output register, and
-//   the valid_pipe shift register advance on EVERY clock edge (ungated).
-//   Because everything downstream of the shift register is a fixed-latency
-//   pipeline and the valid flag rides an identical shift register, a valid
-//   output always corresponds to the input sample captured LATENCY cycles
-//   earlier -- by construction, even for sparse or bursty valid inputs.
-//   When idle, the pipeline simply re-registers the settled values while
-//   valid_pipe shifts zeros, so sample_valid_out only asserts exactly
-//   LATENCY cycles after each asserted sample_valid_in.
+// Valid alignment: the tap shift register only shifts on sample_valid_in,
+// everything downstream advances every clock, and the valid flag rides an
+// identical shift register. So a valid output always corresponds to the
+// sample from LATENCY cycles earlier, even with sparse/bursty inputs.
 // -----------------------------------------------------------------------------
 module fir_filter (
     input  wire               clk,
